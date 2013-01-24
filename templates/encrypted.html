@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block page_content %}
+	<table>
+		<thead>
+			<tr>
+				<th>Encryption Hash</th>
+				<th>Dimensions</th>
+				<th>Metrics</th>
+				<th>Redirect URL</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if records %}
+				{% for record in records %}
+					<tr>
+						<td><a href="{{ request.url_root+'record?encryption_hash='+record['encryption_hash'] }}">{{ record['encryption_hash'] }}</a></td>
+						<td>{{ record['dimensions'] }}</td>
+						<td>{{ record['metrics'] }}</td>
+						<td>{% if "redirect_url" in record['dimensions'] %}{{ record['dimensions']['redirect_url'] }}{% endif %}</td>						
+					</tr>
+				{% endfor %}
+			{% endif %}
+		</tbody>
+	</table>
+{% endblock %}

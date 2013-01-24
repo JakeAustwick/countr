@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+  <meta charset="utf-8">
+  <head>
+    <title>{{ title }}</title>
+    <link href="static/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <style>
+      body {
+        overflow-y:scroll;
+      }
+    </style>
+    <script src="/static/lib/moment.min.js"></script>
+    <script src="/static/lib/d3.v2.js"></script>
+    <script src="/static/nv.d3.js"></script>
+    <script src="/static/src/models/legend.js"></script>
+    <script src="/static/src/models/line.js"></script>
+    <script src="/static/jquery-1.8.3.min.js"></script>
+    <script src="/static/countr.js"></script>
+  </head>
+  <body>
+    <svg class="countr-graph" data-period="{{ period }}" data-metrics="{{ metrics }}" data-dimension="{{ dimension }}" data-title="{{ title }}"></svg>
+  </body>
+</html>

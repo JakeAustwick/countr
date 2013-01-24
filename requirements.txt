@@ -1,0 +1,4 @@
+redis==2.7.1
+Flask==0.9
+Flask-Bootstrap==2.1.0-1
+pygeoip==0.2.5
