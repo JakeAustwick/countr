@@ -15,7 +15,7 @@ import pygeoip
 from flask import *
 from flask.ext.bootstrap import Bootstrap
 
-from datetime import timedelta
+from datetime import timedelta, datetime
 from functools import update_wrapper
 
 app = Flask(__name__)
@@ -258,7 +258,10 @@ def record():
 @app.route('/spy')
 def spy():
 	if auth(request):
-		records = r.lrange('{namespace}:spy'.format(namespace=namespace), 0, 1000)
+		records = [json.loads(record) for record in r.lrange('{namespace}:spy'.format(namespace=namespace), 0, 1000)]
+		records.reverse()
+		records = [(dimensions, metrics, datetime.fromtimestamp(insert_time)) for dimensions, metrics, insert_time in records]
+		print records
 		return render_template('spy.html', records=records)
 	else:
 		return authenticate()

@@ -2,6 +2,10 @@ This project allows one to count stuff over HTTP, then graph it, also over HTTP.
 
 It is very alpha, but potentially useful to some now.
 
+#Required Technologies
+A redis server
+A WSGI server.
+
 #Credits
 
 This product includes GeoLite data created by MaxMind, available from
@@ -32,6 +36,11 @@ For some tracking, pixels, also known as [web bugs](http://en.wikipedia.org/wiki
 
 ###Redirects
 If you wish to track traffic through countr, it can be made to issue a redirect to an arbritary URL. Simply pass "redirect_url": "any_url" as a dimension, then a 302 redirect will be issued to "any_url".
+
+##Displaying Data
+Accessing /graph.html displays a synamically updating graph. The desired dimension and metrics can be specified as get parameters, as well as the time period that you wish to display.
+
+The graph is expressed as an <svg> element. Duplicating the page, then creating more <svg> elements would result in multiple graphs on one page.
 
 #Known bugs
 
