@@ -285,31 +285,31 @@ def data():
 		dimension_v = '*'
 
 	if dimension_v == 'top':
-		metric = metrics[0]
-		for past_period in range(current_period, current_period-periods[period]['lifetime'], -1):
-			dimension_values_key = dimension_values_key_structure.format(
-						namespace=namespace,
-						dimension_k=dimension_k,
-						metric=metric,
-						period=period,
-						current_period=past_period)
+		for metric in metrics:
+                        for past_period in range(current_period, current_period-periods[period]['lifetime'], -1):
+                                dimension_values_key = dimension_values_key_structure.format(
+                                                        namespace=namespace,
+                                                        dimension_k=dimension_k,
+                                                        metric=metric,
+                                                        period=period,
+                                                        current_period=past_period)
 
-			dimension_values_keys = r.smembers(dimension_values_key)
-			if len(dimension_values_keys):
-				dimension_values_scores = [int(v) if v != None else 0 for v in r.mget(dimension_values_keys)]
-				for key, score in sorted(zip(dimension_values_keys, dimension_values_scores), key=lambda x: x[1], reverse=True)[:10]:
-					d_v = key.split(':')[3]
-					if metric != 'hits':
-						metric_name = d_v+' - '+metric
-					else:
-						metric_name = d_v
-					if metric_name not in metrics_data:
-						metrics_data[metric_name] = {}
-					metrics_data[metric_name][past_period] = score
-		for past_period in range(current_period, current_period-periods[period]['lifetime'], -1):
-			for metric in metrics_data:
-				if past_period not in metrics_data[metric]:
-					metrics_data[metric][past_period] = 0
+                                dimension_values_keys = r.smembers(dimension_values_key)
+                                if len(dimension_values_keys):
+                                        dimension_values_scores = [int(v) if v != None else 0 for v in r.mget(dimension_values_keys)]
+                                        for key, score in sorted(zip(dimension_values_keys, dimension_values_scores), key=lambda x: x[1], reverse=True)[:10]:
+                                                d_v = key.split(':')[3]
+                                                if metric != 'hits':
+                                                        metric_name = d_v+' - '+metric
+                                                else:
+                                                        metric_name = d_v
+                                                if metric_name not in metrics_data:
+                                                        metrics_data[metric_name] = {}
+                                                metrics_data[metric_name][past_period] = score
+                        for past_period in range(current_period, current_period-periods[period]['lifetime'], -1):
+                                for metric in metrics_data:
+                                        if past_period not in metrics_data[metric]:
+                                                metrics_data[metric][past_period] = 0
 
 	else:
 		for metric in metrics:
